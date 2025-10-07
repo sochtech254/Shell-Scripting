@@ -1,0 +1,15 @@
+file_1.txt
+file1.txt
+file_2.txt
+file2.txt
+hello1.sh
+helloworld.sh
+log_1.txt
+log.txt
+numbers.txt
+one.txt
+sochcode.txt
+test.txt
+two.txt
+Sat Jul 26 10:23:54 PM EAT 2025
+uid=1000(sochtech) gid=1000(sochtech) groups=1000(sochtech),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),114(lpadmin),984(docker)
