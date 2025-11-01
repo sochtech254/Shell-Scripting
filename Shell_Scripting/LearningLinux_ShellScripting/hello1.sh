@@ -1,4 +1,4 @@
-#!bin/bash
+#!bin/zsh
 #Purpose: This is the first bash shell
 #Version: 1.0
 #Created Date: Wed Jul 23 10:39:45 PM EAT 2025
