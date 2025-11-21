@@ -1,0 +1,514 @@
+echo "Hello $LOGNAME" or ${LOGNAME}-> double quotes may be used to print values of shell environment variables
+echo 'Hello World' -> single quotes may be used to print simple ordinary plain text
+echo "Hello `whoami`" -> (backtick characters or backward quotes{tilde}) may be used inside double quotes to print the value of a command as shown. Also see the following:
+echo "Hello, $(whoami)" -> same as above. Similar examples include:
+$ echo "Today is `date`"
+Or:
+$ echo "Today is $(date)"
+Another example:
+$ echo "$(cal)"
+
+
+The Linux FileSystem:
+/bin		-> Contains common Linux user commands, such as ls, sort, date, and chmod.
+/boot		-> Has the bootable Linux kernel, initial RAM disk, and boot loader configuration files (GRUB).
+/dev		-> Contains files representing access points to devices on your systems. These include terminal devices (tty*), hard disks (hd* or sd*), RAM (ram*), and 
+		   CD-ROM (cd*). Users can access these devices directly through these device files; however, applications often hide the actual device names to end users.
+/etc		-> Contains administrative configuration files. Most of these files are plain-text files that, given the user has proper permission, can be edited with any 
+		   text editor.
+/home		-> Contains directories assigned to each regular user with a login account. (The root user is an exception, using /root as his or her home directory.)
+/media		-> Provides a standard location for automounting devices (removable media in particular). If the medium has a volume name, that name is typically used as the 
+		   mount point. For example, a USB drive with a volume name of myusb would be mounted on /media/myusb.
+/lib		-> Contains shared libraries needed by applications in /bin and /sbin to boot the system.
+/mnt		-> A common mount point for many devices before it was supplanted by the standard /media directory. Some bootable Linux systems still use this directory to
+		   mount hard disk partitions and remote filesystems. Many people still use this directory to temporarily mount local or remote filesystems, which are not 
+		   mounted permanently.
+/misc		-> A directory sometimes used to automount filesystems upon request.
+/opt		-> Directory structure available to store add-on application software.
+/proc		-> Contains information about system resources.
+/root		-> Represents the root user’s home directory. The home directory for root does not reside beneath /home for security reasons.
+/sbin		-> Contains administrative commands and daemon processes.
+/sys		-> Contains parameters for such things as tuning block storage and managing cgroups.
+/tmp		-> Contains temporary files used by applications.
+/usr		-> Contains user documentation, games, graphical files (X11), libraries (lib), and a variety of other commands and files that are not needed during the boot 
+		   process.The /usr directory is meant for files that don’t change after installation (in theory, /usr could be mounted read-only).
+/var		   Contains directories of data used by various applications. In particular, this is where you would place files that you share as an FTP server (/var/ftp) 
+		   or  a web server (/var/www). It also contains all system log files (/var/log) and spool files in /var/spool (such as mail, cups, and news). The /var 
+		   directory contains directories and files that are meant to change often. On server computers, it is common to create the /var directory as a separate 
+		   filesystem, using a filesystem type that can be easily expanded.
+		   
+		   
+Enter the following command. It will show the various types of manual pages displayed by the man command:
+$ man man
+	
+From the following table, you can get an idea about various types of man pages for the same command:
+Section number	Subject area
+	1	User commands
+	2	System calls
+	3	Library calls
+	4	Special files
+	5	File formats
+	6	Games
+	7	Miscellaneous
+	8	System admin
+	9	Kernel routines
+This will show information about the passwd command:
+$ man 5 passwd
+The preceding command will give information about the file passwd, which is stored in /etc /passwd.
+We can get brief information about the command as follows:
+$ whatis passwd
+Every command we type in the terminal has an executable binary program file associated with it. We can check the location of a binary file as follows:
+$ which passwd
+/usr/bin/passwd
+We can get complete information about the binary file location as well as manual page location of any command by following:
+$ whereis passwd
+The output will be as follows:
+passwd: /usr/bin/passwd /etc/passwd /usr/bin/X11/passwd /usr/share/man/man1/passwd.1.gz /usr/share/man/man1/passwd.1ssl.gz /usr/share/man/man5/passwd.5.gz
+
+Many a times, you might need to create new commands from existing commands. Sometimes, existing commands have complex options to remember. In such cases, we can create new 
+commands as follows:
+$ alias ll='ls –l'
+$ alias copy='cp –rf'
+To list all declared aliases, use the following command:
+$ alias
+To remove an alias, use the following command:
+$ unalias copy
+We can check about the operating system details such as UNIX/Linux or the distribution that is installed by the following command:
+$ uname
+Output:
+Linux
+This will display the basic OS information (UNIX name)
+Linux kernel version information will be displayed by the following:
+$ uname –r
+Output:
+3.13.0-32-generic
+To get all the information about a Linux machine, use the following command:
+$ uname –a
+Output:
+Linux ubuntu 3.13.0-32-generic #57~precise1-Ubuntu SMP Tue Jul 15
+03:50:54 UTC 2014 i686 i686 i386 GNU/Linux
+The following commands will give you more information about the distribution of Linux:
+$ cat /proc/version    // detailed info about distribution
+$ cat /etc/*release
+# lsb_release -a    // will tell distribution info for Ubuntu
+The command cat is used for reading files and displayed on the standard output.
+
+Sometimes, we need to copy a file or directory in many places. In such situations, instead of copying the original file or directory again and again, we can create soft links. 
+In Windows, a similar feature is called as creating a shortcut.
+$ ln -s file file_link
+To learn about the type of file, you can use the command file. In Linux, various types of files exist. Some examples are as follows:
+°° Regular file (-)
+°° Directory (d)
+°° Soft link (l)
+°° Character device driver (c)
+°° Block device driver (b)
+°° Pipe file (p)
+°° Socket file (s)
+We can get information about a file using the following command:
+$ file fil_name    // show type of file
+
+The following command will copy the string Hello World to the hello.c file:
+$ echo "Hello World" > hello.c
+The command echo with > overwrites the content of the file. If content already exists in the file, it will be deleted and new content will be added in the file. In a situation, 
+when we need to append the text to the file, then we can use the echo command as follows:
+$ echo "Hello World" >> hello.c    // will append the text
+The following command will display the content of the file on screen:
+$ cat hello.c
+
+To check the file permission, give the following command:
+$ ll file_name
+
+We will see how Linux decides the default permissions of the newly created file or folder:
+$ umask
+0002
+The meaning of the preceding output is that, if we create a new directory, then from the permissions of +rwx, the permission 0002 will be subtracted. This means that for
+a newly created directory, the permissions will be 775 or rwx rwx r-x. For a newly created file, the file permissions will be rw- rw- r--. By default, for any newly
+created text file, the execute bit will never be set. Therefore, the newly created text file and directory will have different permissions even though the umask is same.
+
+Setuid
+Another very interesting functionality is the setuid feature. If the setuid bit is set for a script, then the script will always run with the owner's privileges irrespective
+of which user is running the script. If the administrator wants to run script written by him by other users, then he can set this bit.
+Consider either of the following situations:
+$ chmod u+s file_name
+$ chmod 4777 file
+The file permissions after any of the preceding two commands will be drwsrwxrwx.
+Setgid
+Similar to setuid, the setgid functionality gives the user the ability to run scripts with group owner's privileges, even if it is executed by any other user.
+$ chmod g+s filename
+Alternatively, you can use the following command:
+$ chmod 2777 filename
+File permissions after any of the preceding two commands will be drwxrwsrwtx.
+
+Sticky bit
+Sticky bit is a very interesting functionality. Let's say, in the administration department there are 10 users. If one folder has been set with sticky bit, then all other
+users can copy files to that folder. All users can read the files, but only the owner of the respective file can edit or delete the file. Other user can only read but not edit 
+or modify the files if the sticky bit is set.
+$ chmod +t filename
+Alternatively, you can use the following command:
+$ chmod 1777
+File permissions after any of the preceding two commands will be drwxrwxrwt.
+
+The kernel initiates the OS and creates the first process called init. You can check the presence of this process with the following command:
+$ ps –ef
+We can see the complete process tree using the following command:
+$ pstree
+You can see the very first process as init as well as all other processes with a complete parent and child relation between them. If we use the $ps –ef command,
+then we can see that the init process is owned by root and its parent process ID is 0. This means that there is no parent for init.
+Therefore, except the init process, all other processes are created by some other process. The init process is created by the kernel itself.
+
+The following are the different types of processes:
+• Orphan process: If by some chance the parent process is terminated, then the child process becomes an orphan process. The process which created the parent process, such as 
+the grandparent process, becomes the parent of orphan child process. In the last resort, the init process becomes the parent of the orphan process.
+• Zombie process: Every process has one data structure called the process control table. This is maintained in the operating system. This table contains the information about all 
+the child processes created by the parent process. If by chance the parent process is sleeping or is suspended due to some reason and the child process is terminated, then the 
+parent process cannot receive the information about the child process termination. In such cases, the child process that has been terminated is called the zombie process. When 
+the parent process awakes, it will receive a signal regarding the child process termination and the process control block data structure will be updated. The child process
+termination is then completed.
+• Daemon process: Until now, we had started every new process in a Bash terminal. Therefore, if we print any text with the $ echo "Hello" command, it will be printed in the 
+terminal itself. There are certain processes that are not associated with any terminal. Such processes are called a daemon process. These processes are running in background. 
+An advantage of the daemon process is they are immune to the changes happening to Bash shell, which has created it. When we want to run certain background processes, such as
+DHCP server and so on, then the daemon processes are very useful.
+
+To list the process associated with our current Bash shell terminal, enter the following command:
+$ ps
+To list processes along with the parent process ID associated with the current terminal, enter the following command:
+$ ps –f
+We can see the process ID in the PID column and the parent process ID in the PPID column in the preceding output.
+To list processes with the parent process ID along with the process state, enter the following command:
+$ ps –lf
+In the preceding output, the column with S (state) shows the current state of a process, such as R for running and S for suspended state.
+To list all the processes running in the operating system including system processes, enter the following command:
+$ ps –ef
+If you are interested in more options to learn about the ps command, you can use the following command:
+$ man ps.
+To find a particular process, you can use the following command:
+$ ps –ef | grep "process_name"
+The command with grep will display the process with process_name.
+
+If we want to terminate the running process, enter following command:
+$ kill pid_of_process_to_be_killed
+Many a time, if the process is not killed by the $ kill command, you may need to pass additional option to ensure that the required process is killed, which is shown as 
+follows:
+$ kill -9 pid_of_process_to_be_killed
+We can terminate the process by the name of a process instead of using the process ID as follows:
+$ pkill command_name
+$ pkill sleep
+Or:
+$ pkill -9 command_name
+
+Process management:
+• In a Bash shell, when we enter any command or start any program, it starts running in foreground. In such a situation, we cannot run more than one command in the foreground. 
+We need to create many terminal windows for starting many processes. If we need to start many processes or programs from the same terminal, then we will need to start them as 
+background processes.
+•If we want to start a process in the background, then we need to append the command in the Bash shell by &.
+•If I want to start my program Hello as the background process, then the command would be as follows:
+•$ Hello &
+•If we terminate any command by &, then it starts running as the background process.
+The following used command will make the process sleep for 10000 seconds.
+This means we will not be able to use any other command from the same terminal:
+$ sleep 10000
+Now, you can press the Ctrl + C key combination to terminate the process created by the sleep command.
+To check the presence of all the processes, enter the following command:
+$ jobs or
+$ jobs -l
+The jobs command lists all the processes running in terminal, including foreground and background processes. You can clearly see their status as running, suspended, or stopped. 
+The numbers in [] show the job ID.
+The + sign indicates which command will receive fg and bg commands by default. We will study them in the next topics.
+If you want to make any existing background process to run in the foreground, then use the following command:
+$ fg 3
+The preceding command will make the job number 3 to run in the foreground instead of the background.
+If we want to make the process to stop executing and get it suspended, then press Ctrl + Z. This key combination makes the foreground process to stop executing. Please note that 
+the process has stopped but not terminated.
+To make the stopped process continue running in background, use the following command:
+$ bg job_number
+$ bg 3
+The preceding command will make suspended job numbered process 3 to run in background.
+If you wish to terminate the process, you can use the job ID or process ID as follows:
+$ jobs –l    // This will list jobs with pid
+$ kill pid     or
+$ kill %job_id    // This will kill job
+$ kill %3
+
+Process monitoring tools – top, iostat, and vmstat:
+We can view the native performance of various processes in OS using tools which will be discussed further. To view a dynamic real-time view of the top running processes in
+OS, use the following command:
+$top
+We see the table of values with the following columns:
+• PID: This is the ID of the process
+• USER: This is the user that is the owner of the process
+• PR: This is the priority of the process
+• NI: This is the "NICE" value of the process
+• VIRT: This is the virtual memory used by the process
+• RES: This is the physical memory used for the process
+• SHR: This is the shared memory of the process
+• S: This indicates the status of the process: S=sleep, R=running, and Z=zombie(S)
+• %CPU: This is the % of CPU used by this process
+• %MEM: This is the % of RAM used by the process
+• TIME+: This is the total time of activity of this process
+• COMMAND: This is the name of the process
+To view the statistics of the CPU and the input/output device's utilization, use the following command:
+$ iostat
+$ iostat –c
+Shows only CPU statistics
+$ iostat –d
+Shows only disk statistics
+To view the virtual memory statistics, use the following command:
+$ vmstat
+$ vmstat -s
+This shows various event counters and memory statistics
+$ vmstat –t 1 5
+Runs for every one second stops after executing for five intervals
+$ sar –u 2 3
+This will show the CPU activity report every 2 seconds, 3 times:
+
+Understanding "at":
+Many a times we need to schedule a task for a future time, say in the evening at 8 P.M. on a specific day. We can use the at command in such a situation. Sometimes we need to 
+repeat the same task at a specific time, periodically, every day, or every month. In such situations, we can use the crontab command.
+Let's learn more about the utility of the at command. To use the at command, the syntax is as follows:
+$ at time date
+The following are the examples of the at command:
+• The Control + D command will save the at job. The task will be executed at 11.15 A.M. This command will log messages to the log.txt file at 11.15 A.M.:
+$ at 11.15 AM
+at >echo "Hello World" > $HOME/log.txt
+at >Control + D
+The following command will send an e-mail on March 31, 2015 at 10 A.M.:
+$ at 10am mar 31 2015
+at> echo "taxes due" | mail jon
+at> ^D
+The following command will make the task run on May 20 at 11 A.M.:
+$ at 11 am may 20
+All the jobs which are scheduled by the at command can be listed using the following command:
+$ atq
+To remove a specific job listed by the atq command, we can use the following command:
+$ atrm job-id
+
+Text filtering tools:
+Lets start discussing the two Linux commands, namely, more and less:
+more: Sometimes we get a very large output on the screen for certain commands, which cannot be viewed completely on one screen. In such cases, we can use the more command to view 
+the output text one page at a time. Add "| more" after the command, as follows:
+$ ll /dev | more
+In this command, pressing the spacebar will move the output on the screen one page at a time, or pressing Enter will move the screen by one line at a time.
+less: Instead of more, if you use less it will show a screen containing the full text all at once. We can move forward as well as backwards. This is a very useful text
+filtering tool.
+The syntax of usage is as follows:
+$ command | less
+e.g. $ ll /proc | less
+This command will show a long listing of directory listing of the /proc folder. 
+Let's say that we want to see if the cpuinfo file is present in the directory or not? Just press the arrow key up or down to scroll through the display. With the more
+command, you can not scroll backwards. You can move forward only. With page up and down key presses, you can move forward or backward one page at a time, which is very fast.
+In addition to scrolling forward or backward, you can search for pattern using / for forward search and ? for backward search. You can use N for repeating the search in
+a forward or backward direction.
+
+Head and tail
+For testing the next few commands, we will need a file with a sequence of numbers 1 to 100. For this, use the following command:
+$ seq 100 > numbers.txt
+The preceding command created a file with the numbers 1 to 100 on separate lines. The following example shows the usage of the head command:
+$ head	   // will display top 10 lines
+$ head-3 numbers.txt    // will show first 3 lines
+$ head +5 numbers.txt    // will show from line 5. Some shell may not work this command
+The following example shows the usage of the tail command:
+$ tail    // will display last 10 lines
+$ tail-5 numbers.txt    // will show last 5 lines
+$ tail +15 numbers.txt    // will show from line 15 onwards. Some shell may not work
+To print lines 61 to 65 from numbers.txt into file log.txt, type the following:
+$ head -65 numbers.txt | tail -5 > log.txt
+
+The diff command
+The diff command is used to find differences between two files. Let's see a few examples to find out its usage.
+$ diff file1 file2
+
+The cut command
+The cut command is used to extract specified columns/characters of a text, which is given as follows:
+•-c: Will specify the filtering of characters
+•-d: Will specify the delimiter for fields
+•-f: Will specify the field number
+Using the next command, from the /etc/passwd file, the fields 1 and 3 will be displayed. The display will contain the login name and user ID. We used the –d: option to specify 
+that the field or columns are separated by a colon (:):
+$ cut -d: -f1,3 /etc/passwd
+Using this command, from the /etc/passwd file, the fields 1 to 5 will be displayed. The display will contains the login name, encrypted password, user ID, group ID, and user name:
+$ cut -d: -f1-5 /etc/passwd
+This command will show characters 1 to 3 and 8 to 12 from the emp.lst file:
+$ cut -c1-3,8-12 /home/student/emp.lst
+The output of the date command is sent as an input to the cut command and only the first three characters are printed on screen, which is shown as follows:
+$ date | cut -c1-3
+Mon
+
+The paste command
+Using this utility, we can paste two files horizontally, such as file_1, which will become the first column and file_2 will become the second column:
+$ paste file_1 file_2
+
+The join command:
+Consider two files, namely, one.txt and two.txt.
+In this case, for both the files, the common fields are the fields which have serial numbers that are the same in both files. We can combine both files by following command:
+$ join one.txt two.txt
+
+The uniq command:
+This command removes duplicate adjacent lines from the file:
+$ uniq test    // test file with duplicate adjacent lines
+The next command prints only duplicate lines:
+$ uniq -d test
+
+The comm command:
+The comm command shows the lines unique to file_1, file_2 along with the common lines in them. We can use various options while using the command in the scripts:
+$ comm –-nocheck-order file_1 file_2
+In the preceding example, we can see:
+• The first column shows unique lines in file_1
+• The second column shows unique lines in file_2
+• The last column shows the content common in both the files
+
+The following command will take input from the sample.txt file:
+$ wc < file1
+The preceding command will take content from the file1. The wc command will print the number of lines, words, and characters in the file1.
+$ echo "Hello world" > log.txt
+This command will redirect output to be saved in the log.txt file.
+$ echo "Welcome to Shell Scripting" >> log.txt
+This command will append the Hello World text in the log.txt file.
+The single > will overwrite or replace the existing text in log file. And double >> will append the text in the log file.
+Let's see a few more examples:
+$ tr '[A-Z]' '[a-z]' < sample.txt
+The preceding tr command will read text from the sample.txt file. The tr command will convert all uppercase letters to lower case letters and will print converted text on screen.
+$ ls > log.txt
+In this example command, ls is sending directory content to file log.txt. Whenever we want to store the result of the command in the file, we can use the preceding example.
+
+The > character is used for a success result and 2> is used for error results redirection.
+$ find . –name "*.sh" > success_file 2> /dev/null
+In the preceding example, we are redirecting output or success results to success_file and errors to /dev/null. /dev/null is used to destroy the data, which we do
+not want to be shown on screen.
+$ find . –name "*.sh" &> log.txt
+The preceding command will redirect both output and error to log.txt.
+$ find . –name "*.sh" > log.tx 2>&1
+The preceding command will redirect result to log.txt and send errors to where the output is going, such as log.txt.
+$ echo "File needs an argument" 1>&2
+The preceding command will send a standard output to the standard error. This will merge the output with the standard error.
+
+2> sample.txt -> The error results will be stored in sample.txt
+2>> sample.txt -> The successive error output will be appended to sample.txt
+&> sample.txt -> This will store success and errors, such as in sample.txt
+>& sample.txt -> This will store success and errors, such as in sample.txt (same as above)
+2>&1          -> This will redirect an error to where output is going
+1>&2          -> This will redirects output to where error is going
+>|            -> This overrides no clobber when redirecting the output
+<> filename   -> This uses the file as both standard input and output if a device file (from /dev)
+cat xyz > success_file 2> error_file -> This stores success and failure in different files
+
+The following is the example of various metacharacters:
+Character	Meaning
+*		Match with zero or multiple number of any character
+?		Match any single character
+[..]		Match with any single character within the bracket
+;		Command separator
+|		Pipe two commands
+()		Group commands, used when the output of the command group has to be redirected
+Try the following command out:
+$ ls s*
+$ ls file
+$ ls file[abc]
+$ ls file[abc][cd]
+$ ls file[^bc]
+$ touch file file1 file2 file3..file20
+$ ls ?????
+$ ls file*
+$ ls file[0-9]
+$ ls file[0-9]*
+$ ls file[!1-2]
+
+Brace expansion:
+Curly braces allow you to specify a set of characters from which the shell automatically forms all possible combinations. To make this work, the characters to be combined with the given string must be specified as a comma separated list with no spaces:
+$ touch file{1,2,3}
+$ mkdir directory{1,2,3}{a,b,c}
+$ touch file{a..z}
+
+The following is the summary of various io-redirection and logical operators:
+Char		    Meaning				Example				    Possible Output
+>		    Output Redirection          	$ls > ls.out    		    Output of ls command is redirected(overwritten) to ls.out file
+>>      	    Output Redirection(append)          $ls >> ls.out   		    Output of ls command is redirected(appended) to ls.out file
+<		    Input Redirection		        $ tr 'a' 'A' < file1    	    The tr command reas input from file1 instead of keyboard(stdin)
+`cmd` or $(cmd)	    Command substitution                $echo `date` or $ echo $(date)      The command date is substituted with the result and sent to echo for display.
+||                  OR Conditional Execution            $ test $x-gt 10 || $x-lt 15         Check whether x value is greater than 10 or less than 15
+&&                  AND Conditional Execution           $ test $x-gt 10 && $x-lt 15         Check whether x value is greater than 10 and less than 15
+For example:
+$ ls || echo "Command un-successful"
+$ ls a abcd || echo "Command un-successful"
+These commands will print Command un-successful if the ls command is unsuccessful.
+
+If we want to know what the type of command it is, such as if it is an alias or a function or internal command, it can be found out by the type built-in command, which is shown 
+as follows:
+$ type mkdir
+$ type cd
+$ type ll
+$ type for
+
+To display all shell built-in commands, give the command as follows:
+$ enable
+The output on the screen will show the shell internal commands.
+
+The exit status
+In Shell scripting, we need to check if the last command has successfully executed or not. For example, whether a file or directory is present or not. As per the result, our
+Shell script will continue processing.
+For this purpose, the BASH shell has one status variable ?. The status of the last command execution is stored in ?. The range of numerical value stored in ? will be from 0 to 255. If successful in execution, then the value will be 0; otherwise, it will be non-zero, which is as follows:
+$ ls
+$ echo $?
+0
+Here, zero as the return value indicates success.
+In the next case, we see:
+$ ls /root
+$ echo $?
+2
+Here, non-zero value indicates an error in the last command execution. In the next case, we see:
+$ find / -name hello.c
+$ echo $?
+The return value will indicate if the hello.c file is present or not!
+
+Command separators
+Commands can also be combined in such a way that they are executed in a particular sequence.
+The first command is executed, and the second one is started as soon as the first one has finished.
+$ w; date
+$ w ; date > whoandwhen
+Output of the date command will be redirected to the whoandwhen file.
+
+Command grouping
+Commands may also be grouped so that all of the output is either piped to another command or redirected to a file.
+$ ( ls; pwd; date ) > outputfile
+The output of each of the commands is sent to the file called outputfile. The spaces inside the parentheses are necessary.
+$ ( w ; date ) > whoandwhen
+The output of the w command and date will be redirected to the whoandwhen file.
+
+Command1 & command2
+The first command is started in the background to continue until it has finished; immediately after starting first command, the second command is started and it will run in the foreground:
+$ sleep 1000 &; ll
+
+Command1 && command2
+The second command is only started if the first command is successful. To achieve this, the shell checks the exit (return) status of the first command and starts the second command only if and when that exit status is found to be "0".
+$ ls /home/ganesh && echo "Command executed successfully"
+
+Command1 || command2
+The second command is only started if the first command fails. The shell checks the exit status of the first command and starts the second command only if that exit status is not equal to "0".
+$ ls /root || echo "Command execution failed"
+Example:
+$ ls || echo "command ls failed"
+
+$ [[ "a" = "b" ]]; echo ok
+ok
+OR:
+$ test "a" = "b"; echo ok
+ok
+In this case, the [[ ]] expression will evaluate to false. Since the semicolon will not check the status of the earlier command, ok will be printed even if the first [[ ]]
+fails.
+$ [[ "a" = "b" ]] && echo ok
+In this case, the [[ ]] expression will evaluate to false. As the first expression is false, the "&&" operator will not proceed to execute the next command.
+In this case, ok will be printed only if [[ ]] is true.
+
+Pipes
+It is a tool for inter-process communication. 
+$ command_1 | command_2
+In this case, the output of command_1 will be send as an input to command_2. The limitation is that the communication is half duplex. This means the data can flow in only one direction.
+A simple example is as follows:
+$ who | wc
+The preceding simple command will be carrying out three different activities. First, it will copy the output of the who command to the temporary file. Then the wc
+command will read the temporary file and display the result. Finally, the temporary file will be deleted.
+Normally, there will be two processes. The first command is the writer process. The second process is the reader process. The writer process will write to temp_file
+and the reader will read from temp_file. Examples of writer processes are ps, ls, and date. Examples of reader processes are wc, cat, and sort.
+
+
+
+
