@@ -1,5 +1,5 @@
 echo "Hello $LOGNAME" or ${LOGNAME}-> double quotes may be used to print values of shell environment variables
-echo 'Hello World' -> single quotes may be used to print simple ordinary plain text
+echo 'Hello World' -> single quotes may be used to print simple ordinary plain text. Prints text as it is.
 echo "Hello `whoami`" -> (backtick characters or backward quotes{tilde}) may be used inside double quotes to print the value of a command as shown. Also see the following:
 echo "Hello, $(whoami)" -> same as above. Similar examples include:
 $ echo "Today is `date`"
@@ -8,6 +8,12 @@ $ echo "Today is $(date)"
 Another example:
 $ echo "$(cal)"
 
+To print the default shell:
+$ echo $SHELL    # /bin/zsh
+To print the current shell:
+$ echo $0    # zsh
+To print all available shells:
+$ cat /etc/shells
 
 The Linux FileSystem:
 /bin		-> Contains common Linux user commands, such as ls, sort, date, and chmod.
@@ -508,6 +514,49 @@ The preceding simple command will be carrying out three different activities. Fi
 command will read the temporary file and display the result. Finally, the temporary file will be deleted.
 Normally, there will be two processes. The first command is the writer process. The second process is the reader process. The writer process will write to temp_file
 and the reader will read from temp_file. Examples of writer processes are ps, ls, and date. Examples of reader processes are wc, cat, and sort.
+
+Understanding variables
+Declaring variables in Linux is very easy. We just need to use the variable name and initialize it with the required content.
+$ person="Ganesh Naik"
+To get the content of the variable we need to prefix $ before the variable.
+For example:
+$ echo person
+person
+$ echo $person
+Ganesh Naik
+The unset command can be used to delete a variable:
+$ a=20
+$ echo $a
+$ unset a
+The unset command will clear or remove the variable from shell environment as well.
+$ set
+The set command will display all variables as well as functions that have been declared.
+Whenever we declare a variable, that variable will be available in the current terminal or shell. This variable will not be available to any other processes, terminal, or shell.
+We can view all environment variables by the following command:
+$ env
+Or:
+$ printenv
+Whenever any user logs in, the /etc/profile Shell script is executed.
+For every user, the .bash_profile Shell script is stored in the home folder.
+The complete path or location is /home/user_name/.profile.
+Whenever a new terminal is created, every new terminal will execute the script .bashrc, which is located in the home folder of every user.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
